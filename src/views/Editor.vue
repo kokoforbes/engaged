@@ -4,16 +4,13 @@
       <ejs-richtexteditor
       class="editor"
         ref="rteObj"
-        :value="element"
         :quickToolbarSettings="quickToolbarSettings"
-        :height="340"
+        :height="300"
         :toolbarSettings="toolbarSettings"
         :placeholder="placeholder"
-        :imageUploading="onImageUploading"
-        @keyup.enter="save($event)"
       >
       </ejs-richtexteditor>
-      <button class="btn-save" @click="save($event)">Save</button>
+      <button class="btn-save" @click="save()">Save</button>
     </div>
   </div>
 </template>
@@ -33,11 +30,8 @@ Vue.use(RichTextEditorPlugin)
 export default {
   data () {
     return {
-      element: '',
-      // taskList: [],
       placeholder: 'Type Something',
       currentElement: this.$route.query.edit,
-      height: 400,
       quickToolbarSettings: {
         image: [
           'Replace',
@@ -101,11 +95,7 @@ export default {
   },
   methods: {
     save (e) {
-      console.log(e.target.innerHTML)
-      console.log(this.element)
-
-      console.log(this.$refs.rteObj.$el.ej2_instances.getContent)
-      console.log(this.$refs.rteObj.ej2Instances.cloneValue.value)
+      // console.log(this.$refs.rteObj.ej2Instances.cloneValue)
 
       const taskList = this.getListStorage()
       if (this.currentElement) {
@@ -116,24 +106,12 @@ export default {
         taskList.push(this.$refs.rteObj.ej2Instances.cloneValue)
       }
       // console.log(this.$refs.rteObj.$el.ej2_instances[0])
-      var instance = this.$refs.rteObj.$el.ej2_instances[0]
-      instance.contentModule
-        .getDocument()
-      // console.log(this.$refs.rteObj.ej2Instances)
       taskList.push(this.$refs.rteObj.ej2Instances.cloneValue)
       // console.log(this.taskList)
       localStorage.setItem('taskList', JSON.stringify(taskList))
       setTimeout(() => {
         this.$router.push('/list')
       }, 1000)
-    },
-    onImageUploading: function (args) {
-      console.log('file is uploading')
-      var imgSize = 200000
-      var sizeInBytes = args.fileData.size
-      if (imgSize < sizeInBytes) {
-        args.cancel = true
-      }
     },
     getListStorage () {
       let taskList
