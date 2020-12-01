@@ -1,5 +1,5 @@
 # engaged
-[live ] https://nifty-dubinsky-53d5b9.netlify.app/list
+[live ] https://nifty-dubinsky-53d5b9.netlify.app
 ## Project setup
 ```
 npm install
